@@ -1,7 +1,14 @@
-<script setup></script>
+<script setup>
+import AppHeader from "./components/AppHeader.vue";
+</script>
 
 <template>
-  <h1>Hello</h1>
+  <div id="app">
+    <AppHeader />
+    <div class="container mt-3">
+      <RouterView />
+    </div>
+  </div>
 </template>
 
 <style scoped>
