@@ -72,6 +72,16 @@ const activeContact = computed(() => filteredContacts.value[activeIndex.value]);
           <i class="fas fa-address-card"></i>
         </h4>
         <ContactCard :contact="activeContact" />
+        <RouterLink
+          :to="{
+            name: 'contact.edit',
+            params: { id: activeContact._id },
+          }"
+        >
+          <span class="mt-2 badge bg-warning text-black">
+            <i class="fas fa-edit"></i> Hiệu chỉnh
+          </span>
+        </RouterLink>
       </div>
     </div>
   </div>
