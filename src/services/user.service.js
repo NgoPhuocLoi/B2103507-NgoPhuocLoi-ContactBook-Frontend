@@ -4,17 +4,17 @@ class UserService {
     this.api = createApiClient(baseUrl);
   }
   async register({ username, password }) {
-    return await this.api.post(this.baseUrl + "/register", {
+    return await this.api.post("/register", {
       username,
       password,
-    }).data;
+    });
   }
 
   async login({ username, password }) {
-    return await this.api.post(this.baseUrl + "/login", {
+    return await this.api.post("/login", {
       username,
       password,
-    }).data;
+    });
   }
 }
-export default new UserService();
+export default UserService;

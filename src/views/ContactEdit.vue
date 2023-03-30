@@ -3,20 +3,20 @@ import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import ContactForm from "../components/ContactForm.vue";
 import contactService from "../services/contact.service";
-
+const ContactService = new contactService();
 const route = useRoute();
 const router = useRouter();
 const contact = ref();
 const message = ref("");
 
 onMounted(async () => {
-  const res = await contactService.get(route.params.id);
+  const res = await ContactService.get(route.params.id);
   contact.value = res.contact[0];
 });
 
 const updateContact = async (newContact) => {
   try {
-    await contactService.update(contact.value._id, newContact);
+    await ContactService.update(contact.value._id, newContact);
     message.value = "Liên hệ được cập nhật thành công.";
   } catch (error) {
     console.log(error);
@@ -26,7 +26,7 @@ const updateContact = async (newContact) => {
 const deleteContact = async (id) => {
   try {
     if (confirm("Bạn muốn xóa Liên hệ này?")) {
-      await contactService.delete(id);
+      await ContactService.delete(id);
       router.push({ name: "contactbook" });
     }
   } catch (error) {

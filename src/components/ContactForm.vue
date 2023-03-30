@@ -11,7 +11,6 @@ const schema = yup.object({
     .email("E-mail không đúng.")
     .required("Email phải có giá trị!")
     .max(50, "E-mail tối đa 50 ký tự."),
-  address: yup.string().max(100, "Địa chỉ tối đa 100 ký tự."),
   name: yup
     .string()
     .required("Tên phải có giá trị.")
@@ -22,13 +21,11 @@ const schema = yup.object({
     .string()
     .matches(/((09|03|07|08|05)+([0-9]{8})\b)/g, "Số điện thoại không hợp lệ."),
 });
-
 const contactLocal = ref(contact);
 
 const submitContact = () => {
   emit("submit:contact", contactLocal.value);
 };
-
 const deleteContact = () => {
   emit("delete:contact", contactLocal.value._id);
 };
@@ -103,10 +100,3 @@ const deleteContact = () => {
     </div>
   </Form>
 </template>
-
-<style scoped>
-.error-feedback {
-  font-size: 12px;
-  color: red;
-}
-</style>

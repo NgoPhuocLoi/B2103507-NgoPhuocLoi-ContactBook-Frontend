@@ -1,13 +1,13 @@
 import axios from "axios";
-const commonConfig = {
-  headers: {
-    "Content-Type": "application/json",
-    Accept: "application/json",
-  },
-};
-export default (baseURL) => {
+
+export default (baseURL, token = null) => {
   return axios.create({
     baseURL,
-    ...commonConfig,
+
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
   });
 };

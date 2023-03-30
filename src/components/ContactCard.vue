@@ -27,5 +27,3 @@ const { contact } = defineProps(["contact"]);
     </div>
   </div>
 </template>
-
-<style scoped></style>

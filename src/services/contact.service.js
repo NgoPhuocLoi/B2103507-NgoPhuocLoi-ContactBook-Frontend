@@ -1,7 +1,7 @@
 import createApiClient from "./api.service";
 class ContactService {
-  constructor(baseUrl = "/api/contacts") {
-    this.api = createApiClient(baseUrl);
+  constructor(baseUrl = "/api/contacts", token = localStorage["accessToken"]) {
+    this.api = createApiClient(baseUrl, token);
   }
   async getAll() {
     return (await this.api.get("/")).data;
@@ -22,4 +22,4 @@ class ContactService {
     return (await this.api.delete(`/${id}`)).data;
   }
 }
-export default new ContactService();
+export default ContactService;

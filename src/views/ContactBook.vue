@@ -1,17 +1,28 @@
 <script setup>
-import ContactList from "../components/ContactList.vue";
+import { computed, onMounted, ref, watch } from "vue";
+import { useRouter } from "vue-router";
 import ContactCard from "../components/ContactCard.vue";
+import ContactList from "../components/ContactList.vue";
 import InputSearch from "../components/InputSearch.vue";
-import ContactService from "../services/contact.service";
-import { ref, onMounted, computed, watch } from "vue";
+import contactService from "../services/contact.service";
 
+const ContactService = new contactService();
 const contacts = ref([]);
 const activeIndex = ref(-1);
 const searchText = ref("");
+const router = useRouter();
+
+const getAllContacts = async () => {
+  try {
+    const res = await ContactService.getAll();
+    contacts.value = res.contacts;
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 onMounted(async () => {
-  const res = await ContactService.getAll();
-  contacts.value = res.contacts;
+  await getAllContacts();
 });
 
 watch(searchText, () => {
@@ -28,6 +39,26 @@ const filteredContacts = computed(() => {
 const filteredContactsCount = computed(() => filteredContacts.value.length);
 
 const activeContact = computed(() => filteredContacts.value[activeIndex.value]);
+
+const refreshList = async () => {
+  await getAllContacts();
+  activeIndex.value = -1;
+};
+
+const goToAddContact = () => {
+  router.push("/contacts/add");
+};
+
+const removeAllContacts = async () => {
+  if (confirm("Bạn muốn xóa tất cả Liên hệ?")) {
+    try {
+      await ContactService.deleteAll();
+      await getAllContacts();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+};
 </script>
 
 <template>
@@ -49,7 +80,7 @@ const activeContact = computed(() => filteredContacts.value[activeIndex.value]);
       <p v-else>Không có liên hệ nào.</p>
       <div class="mt-3 row justify-content-around align-items-center">
         <div class="col">
-          <button class="btn btn-sm btn-primary" @click="refreshList()">
+          <button class="btn btn-sm btn-primary" @click="refreshList">
             <i class="fas fa-redo"></i> Làm mới
           </button>
         </div>
