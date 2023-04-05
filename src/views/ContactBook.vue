@@ -32,7 +32,7 @@ watch(searchText, () => {
 const filteredContacts = computed(() => {
   if (!searchText.value) return contacts.value;
   return contacts.value.filter((contact) =>
-    contact.name.includes(searchText.value)
+    contact.name.toLowerCase().includes(searchText.value.toLowerCase())
   );
 });
 

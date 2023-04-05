@@ -17,7 +17,6 @@ import AppHeader from "./components/AppHeader.vue";
   margin: auto;
 }
 </style>
-
 <style>
 .error-feedback {
   font-size: 12px;
